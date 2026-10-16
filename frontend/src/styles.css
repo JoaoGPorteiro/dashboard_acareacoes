@@ -9,11 +9,11 @@
   --secundario: #6e6e73;
   --material: rgba(236, 236, 240, 0.8); /* menu lateral */
   --acento: #0086ff; /* azul Magalu: barras e destaques */
-  --acento-texto: #006fd6; /* links e item ativo */
+  --acento-texto: #0064c2; /* links, item ativo e etiqueta Improcedente (AA também sobre o azul suave) */
   --acento-suave: rgba(0, 134, 255, 0.1);
   --botao: #006fd6; /* branco sobre ele: 4,95:1 (o #0086ff dá 3,59:1) */
   --serie-1: #0086ff; /* Improcedente */
-  --serie-2: #e6007e; /* Procedente — rosa da faixa Magalu */
+  --serie-2: #f0263c; /* Procedente — vermelho da faixa Magalu (é o resultado ruim) */
   --serie-3: #c7c7cc; /* Em análise */
   --coluna: #d2d2d7;
   --ok: #1b7a34;
@@ -42,7 +42,7 @@
   --acento-suave: rgba(26, 140, 255, 0.16);
   --botao: #006fd6;
   --serie-1: #1a8cff;
-  --serie-2: #e8338c;
+  --serie-2: #ff453a;
   --serie-3: #48484a;
   --coluna: #3a3a3c;
   --ok: #4cd368;
@@ -1121,4 +1121,28 @@ textarea {
     grid-template-columns: 1rem minmax(0, 6.5rem) minmax(2.5rem, 1fr) 1.5rem auto;
     gap: 0.5rem;
   }
+}
+
+/* Etiqueta de procedência: procedente é o resultado ruim (vermelho), improcedente o azul Magalu */
+.pill[data-procedencia="Procedente"] {
+  background: var(--critico-bg);
+  color: var(--critico);
+  font-weight: 600;
+}
+
+.pill[data-procedencia="Improcedente"] {
+  background: var(--acento-suave);
+  color: var(--acento-texto);
+  font-weight: 600;
+}
+
+/* "Ver todos" dos embarcadores: lista inteira com rolagem própria */
+.bh.todos {
+  max-height: 27.5rem;
+  padding-right: 0.25rem;
+  overflow-y: auto;
+}
+
+.ver-todos {
+  margin-top: 0.875rem;
 }

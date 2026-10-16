@@ -107,7 +107,7 @@ export default function Registros({ registros, abrirForm, recarregar }: Acoes) {
                   <td>{r.motorista}</td>
                   <td>{r.embarcador}</td>
                   <td><span className="pill">{r.status}</span></td>
-                  <td>{r.procedencia}</td>
+                  <td><span className="pill" data-procedencia={r.procedencia}>{r.procedencia}</span></td>
                   <td className="detalhe" title={r.detalhe}>{r.detalhe}</td>
                   <td className="acoes-linha">
                     <button type="button" className="link" onClick={() => abrirForm(r)}>Editar</button>

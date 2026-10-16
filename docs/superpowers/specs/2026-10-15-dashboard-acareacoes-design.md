@@ -122,7 +122,7 @@ Estrutura herdada de `inspiracao/dashboard_rh-main/frontend` (menu lateral, cabe
   - Procedentes (% procedentes sobre o total; detalhe em p.p.)
   - Indenizados (status = Indenizado)
   - Motoristas em atenção (situação = Atenção)
-- Cards: **Reclamações por motorista** (ranking em barras horizontais empilhadas Improcedente/Procedente, total e selo de situação — substitui a pizza 3D; mostra todos com rolagem), **Acareações por mês** (colunas, mês selecionado em destaque), **Status**, **Por embarcador** (top 4 + "Outros (n)"), **Últimos registros** (5 linhas + "Ver todos").
+- Cards: **Reclamações por motorista** (ranking em barras horizontais empilhadas Improcedente/Procedente, total e selo de situação — substitui a pizza 3D; mostra todos com rolagem), **Acareações por mês** (colunas, mês selecionado em destaque), **Status**, **Por embarcador** (top 4 + "Outros (n)", com "Ver todos (n)" que lista todos com nome e quantidade), **Últimos registros** (5 linhas + "Ver todos").
 
 **Situação do motorista** — sobre a **média mensal** de reclamações do motorista no período (`total ÷ meses do período`; em "Mês" é o próprio total, idêntico à planilha):
 
@@ -149,7 +149,7 @@ Em "Tudo", meses = de janeiro/2026 até o mês atual. Selo sempre com texto + co
 
 - **Cor** (tokens em `styles.css`, únicos lugares com cor):
   - Ação/acento: azul Magalu `#0086FF`; botões com texto branco usam `#006FD6` (contraste 4,95:1 — o `#0086FF` dá 3,59:1 e reprova AA).
-  - Séries: Improcedente `#0086FF`, Procedente `#E6007E` (rosa da faixa Magalu). Validado com `dataviz/validate_palette.js` no modo claro (todas as checagens passam); o modo escuro tem passos próprios e será validado na implementação.
+  - Séries e etiquetas: Improcedente azul Magalu `#0086FF`, Procedente vermelho da faixa Magalu `#F0263C` (escuro `#FF453A`) — é o resultado ruim (pedido do usuário em 2026-10-16). A coluna Procedência das tabelas usa etiquetas nas mesmas cores; outras procedências em cinza. Validado com `dataviz/validate_palette.js` no modo claro (todas as checagens passam); o modo escuro tem passos próprios e será validado na implementação.
   - Situação: Ótimo verde, Bom neutro, Regular âmbar, Atenção vermelho — fundos suaves + texto escuro do mesmo tom.
   - Faixa multicolorida Magalu (amarelo, laranja, vermelho, rosa, roxo, azul, verde) só como assinatura sob a marca.
   - Neutros: fundo `#F5F5F7`, superfície `#FFFFFF`, texto `#1D1D1F`, secundário `#6E6E73`; tema escuro com passos próprios.

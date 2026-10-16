@@ -21,6 +21,7 @@ export default function Painel({ registros, abrirForm }: Acoes) {
   const [periodo, setPeriodo] = useState<Periodo>({ escala: "mes", ref: atual });
   const [exportando, setExportando] = useState(false);
   const [erro, setErro] = useState("");
+  const [todosEmbarcadores, setTodosEmbarcadores] = useState(false);
 
   const int = intervalo(periodo, atual, primeiro);
   const doPeriodo = noIntervalo(registros, int);
@@ -34,6 +35,7 @@ export default function Painel({ registros, abrirForm }: Acoes) {
   const meses = porMes(registros, int.ate < atual ? int.ate : atual);
   const maxMes = Math.max(0, ...meses.map((m) => m.valor));
   const mostraValor = periodo.escala === "mes" || periodo.escala === "trimestre";
+  const embarcadores = contar(doPeriodo, "embarcador");
 
   async function baixar() {
     setExportando(true);
@@ -149,7 +151,12 @@ export default function Painel({ registros, abrirForm }: Acoes) {
 
         <section className="card">
           <h2>Por embarcador</h2>
-          <Barras itens={contar(doPeriodo, "embarcador", 4)} total={doPeriodo.length} />
+          <Barras itens={todosEmbarcadores ? embarcadores : contar(doPeriodo, "embarcador", 4)} total={doPeriodo.length} todos={todosEmbarcadores} />
+          {embarcadores.length > 4 && (
+            <button type="button" className="link ver-todos" aria-expanded={todosEmbarcadores} onClick={() => setTodosEmbarcadores(!todosEmbarcadores)}>
+              {todosEmbarcadores ? "Ver menos" : `Ver todos (${embarcadores.length})`}
+            </button>
+          )}
         </section>
 
         <section className="card span-2">
@@ -181,7 +188,7 @@ export default function Painel({ registros, abrirForm }: Acoes) {
                       <td>{r.motorista}</td>
                       <td>{r.embarcador}</td>
                       <td><span className="pill">{r.status}</span></td>
-                      <td>{r.procedencia}</td>
+                      <td><span className="pill" data-procedencia={r.procedencia}>{r.procedencia}</span></td>
                     </tr>
                   ))}
                 </tbody>
@@ -219,11 +226,11 @@ function Kpi(props: { rotulo: string; atual: number; anterior?: number; fmt: (n:
   );
 }
 
-function Barras({ itens, total }: { itens: Item[]; total: number }) {
+function Barras({ itens, total, todos }: { itens: Item[]; total: number; todos?: boolean }) {
   const max = Math.max(0, ...itens.map((i) => i.valor));
   if (!itens.length) return <p className="estado">Nenhuma acareação neste período.</p>;
   return (
-    <ul className="bh">
+    <ul className={todos ? "bh todos" : "bh"}>
       {itens.map((i) => (
         <li key={i.rotulo}>
           <span>{i.rotulo}</span>
