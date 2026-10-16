@@ -190,8 +190,8 @@ def criar(a: Acareacao, u: dict = Depends(usuario_atual)) -> dict:
 def editar(rid: int, a: Acareacao, _: dict = Depends(usuario_atual)) -> dict:
     with conectar() as c:
         linha = c.execute(ATUALIZAR, {**padronizar(c, a.model_dump()), "id": rid}).fetchone()
-    if not linha:
-        raise HTTPException(404, "Registro não encontrado.")
+        if not linha:  # dentro da transação: desfaz o apelido gravado por padronizar
+            raise HTTPException(404, "Registro não encontrado.")
     return linha
 
 

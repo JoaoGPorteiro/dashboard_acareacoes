@@ -178,6 +178,8 @@ def test_crud_no_banco(como, monkeypatch):
             c.execute("delete from apelidos where campo = 'motorista' and chave = 'motoristateste'")
     assert cliente.put(f"/api/acareacoes/{rid}", json=BASE).status_code == 404
     assert cliente.delete(f"/api/acareacoes/{rid}").status_code == 404
+    with index.conectar() as c:  # edição que falha não pode deixar apelido gravado
+        assert c.execute("select count(*) n from apelidos where chave = 'motoristateste'").fetchone()["n"] == 0
 
 
 class Apelidos:
