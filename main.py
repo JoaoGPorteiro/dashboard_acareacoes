@@ -194,6 +194,9 @@ def exigir(*nomes: str) -> None:
             "Confira se cada linha está como NOME=valor, com o nome exatamente igual ao do README "
             "(sem espaços nem caracteres invisíveis copiados junto)."
         )
+    url = os.environ.get("SUPABASE_URL", "")
+    if "SUPABASE_URL" in nomes and not url.startswith("https://"):
+        raise SystemExit(f"SUPABASE_URL deve ser a URL completa, ex.: https://{url or '<projeto>'}.supabase.co")
 
 
 def main(argv=None) -> None:

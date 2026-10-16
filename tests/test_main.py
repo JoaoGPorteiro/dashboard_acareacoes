@@ -211,3 +211,9 @@ def test_exigir_variaveis_explica_o_que_falta(monkeypatch):
         main.exigir("SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "DATABASE_URL")
     assert "SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL" in str(e.value) and "SUPABASE_URL," not in str(e.value)
     assert "invisíveis" in str(e.value)
+
+
+def test_exigir_recusa_supabase_url_incompleta(monkeypatch):
+    monkeypatch.setenv("SUPABASE_URL", "abcdefghij")
+    with pytest.raises(SystemExit, match="https://abcdefghij.supabase.co"):
+        main.exigir("SUPABASE_URL")
