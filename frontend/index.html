@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acareações</title>
+    <script>
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem("tema"); } catch (e) {}
+        if (t !== "claro" && t !== "escuro") t = matchMedia("(prefers-color-scheme: dark)").matches ? "escuro" : "claro";
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
