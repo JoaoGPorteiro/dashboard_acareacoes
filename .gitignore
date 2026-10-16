@@ -1,0 +1,17 @@
+# Dados pessoais (LGPD) — nunca commitar
+*.xlsx
+nomes.csv
+
+# Segredos
+.env
+.env.*
+
+# Gerados
+node_modules/
+dist/
+__pycache__/
+.vercel/
+
+# Fora do projeto
+.superpowers/
+inspiracao/
