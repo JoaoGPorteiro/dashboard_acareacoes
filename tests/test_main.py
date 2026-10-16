@@ -201,3 +201,13 @@ def test_aplicar_recusa_de_para_contraditorio(planilha, tmp_path, monkeypatch):
 def test_planilha_real_importa_os_956_registros():
     validos, erros = main.validar(main.ler_planilha(REAL))
     assert erros == [] and len(validos) == 956
+
+
+def test_exigir_variaveis_explica_o_que_falta(monkeypatch):
+    monkeypatch.setenv("SUPABASE_URL", "https://x.supabase.co")
+    monkeypatch.setenv("SUPABASE_SERVICE_ROLE_KEY", "")
+    monkeypatch.delenv("DATABASE_URL", raising=False)
+    with pytest.raises(SystemExit) as e:
+        main.exigir("SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY", "DATABASE_URL")
+    assert "SUPABASE_SERVICE_ROLE_KEY, DATABASE_URL" in str(e.value) and "SUPABASE_URL," not in str(e.value)
+    assert "invisíveis" in str(e.value)

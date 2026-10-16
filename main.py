@@ -8,6 +8,7 @@
 import argparse
 import csv
 import getpass
+import os
 import re
 import unicodedata
 from collections import Counter
@@ -185,6 +186,16 @@ def criar_admin(usuario: str) -> None:
     print(f"Administrador {usuario} criado.")
 
 
+def exigir(*nomes: str) -> None:
+    faltando = [n for n in nomes if not os.environ.get(n)]
+    if faltando:
+        raise SystemExit(
+            f"Faltam no .env (ou estão vazias): {', '.join(faltando)}.\n"
+            "Confira se cada linha está como NOME=valor, com o nome exatamente igual ao do README "
+            "(sem espaços nem caracteres invisíveis copiados junto)."
+        )
+
+
 def main(argv=None) -> None:
     from dotenv import load_dotenv  # só existe no ambiente local
 
@@ -198,8 +209,11 @@ def main(argv=None) -> None:
     adm.add_argument("usuario")
     args = p.parse_args(argv)
     if args.comando == "importar":
+        if args.aplicar:
+            exigir("DATABASE_URL")
         importar(args.planilha, args.aplicar)
     else:
+        exigir("SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY")
         criar_admin(args.usuario)
 
 
